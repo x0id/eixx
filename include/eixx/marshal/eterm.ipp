@@ -156,7 +156,9 @@ void eterm<Alloc>::decode(const char* a_buf, int& idx, size_t a_size, const Allo
         new (this) eterm<Alloc>((long)l);
         break;
     }
+#if defined(NEW_FLOAT_EXT)
     case NEW_FLOAT_EXT:
+#endif
     case ERL_FLOAT_EXT: {
         double d;
         if (ei_decode_double(a_buf, &idx, &d) < 0)
