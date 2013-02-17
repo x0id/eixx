@@ -264,16 +264,16 @@ public:
     ~eterm() {
         switch (m_type) {
             //No need to destruct atoms - they are stored in global atom table.
-            //case ATOM:   {        atom& v = vt; v.~atom();   return; }
-            case STRING: { string<Alloc>& v = vt; v.~string(); return; }
-            case BINARY: { binary<Alloc>& v = vt; v.~binary(); return; }
-            case PID:    { epid<Alloc>&   v = vt; v.~epid();   return; }
-            case PORT:   { port<Alloc>&   v = vt; v.~port();   return; }
-            case REF:    { ref<Alloc>&    v = vt; v.~ref();    return; }
-            case VAR:    { var<Alloc>&    v = vt; v.~var();    return; }
-            case TUPLE:  { tuple<Alloc>&  v = vt; v.~tuple();  return; }
-            case LIST:   { list<Alloc>&   v = vt; v.~list();   return; }
-            case TRACE:  { trace<Alloc>&  v = vt; v.~trace();  return; }
+            //case ATOM:   {        atom& v = vt; v.~atom<Alloc>();   return; }
+            case STRING: { string<Alloc>& v = vt; v.~string<Alloc>(); return; }
+            case BINARY: { binary<Alloc>& v = vt; v.~binary<Alloc>(); return; }
+            case PID:    { epid<Alloc>&   v = vt; v.~epid<Alloc>();   return; }
+            case PORT:   { port<Alloc>&   v = vt; v.~port<Alloc>();   return; }
+            case REF:    { ref<Alloc>&    v = vt; v.~ref<Alloc>();    return; }
+            case VAR:    { var<Alloc>&    v = vt; v.~var<Alloc>();    return; }
+            case TUPLE:  { tuple<Alloc>&  v = vt; v.~tuple<Alloc>();  return; }
+            case LIST:   { list<Alloc>&   v = vt; v.~list<Alloc>();   return; }
+            case TRACE:  { trace<Alloc>&  v = vt; v.~trace<Alloc>();  return; }
             default: return;
         }
     }

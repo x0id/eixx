@@ -52,14 +52,14 @@ class epid {
         // creation is a special value that allows 
         // distinguishing pid values between successive node restarts.
         union u {
-            struct s {
+            struct s_ {
                 uint8_t  creation:  3;
                 uint16_t serial  : 13;
                 uint16_t id      : 15;
             } s;
             uint32_t i;
 
-            BOOST_STATIC_ASSERT(sizeof(s) == 4);
+            BOOST_STATIC_ASSERT(sizeof(s_) == 4);
 
             u(uint16_t a_id, uint16_t a_ser, uint8_t a_cre) {
                 s.id = a_id & 0x7fff; s.serial = a_ser & 0x1fff; s.creation = a_cre & 0x03;

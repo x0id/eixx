@@ -110,7 +110,7 @@ public:
     ~tuple() {
         if (m_blob && m_blob->release(false)) {
             for(size_t i=0, n=size(); i < n; i++)
-                m_blob->data()[i].~eterm();
+                m_blob->data()[i].~eterm<Alloc>();
             m_blob->free();
         }
     }

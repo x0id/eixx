@@ -83,7 +83,7 @@ private:
             header_t* l_header = header();
             if (l_header->size > 0) {
                 for (cons_t* p = head(); p; p = p->next)
-                    p->node.~eterm();
+                    p->node.~eterm<Alloc>();
                 // If there were any allocations after the original 
                 // construction of the list head descriptor, deallocate
                 // all the following cons.
