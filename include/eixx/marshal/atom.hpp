@@ -41,14 +41,19 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <eixx/marshal/string.hpp>
 #include <eixx/eterm_exception.hpp>
 #include <eixx/util/hashtable.hpp>
+#ifndef EIXX_NO_ATOM_TABLE_LOCK
+#include <eixx/util/sync.hpp>
+#endif
 #include <ei.h>
 
 namespace EIXX_NAMESPACE {
 namespace marshal {
 namespace detail {
 
+#ifndef EIXX_NO_ATOM_TABLE_LOCK
     namespace eid = EIXX_NAMESPACE::detail;
     using eid::lock_guard;
+#endif
 
     /// Create an atom containing node name.
     inline void check_node_length(size_t len) {
@@ -65,7 +70,11 @@ namespace detail {
     /// and its content is never cleared.  The table contains a unique
     /// list of strings represented as atoms added throughout the lifetime
     /// of the application.
+#ifndef EIXX_NO_ATOM_TABLE_LOCK
     template <typename Mutex = eid::mutex>
+#else
+    template <typename Mutex = void>
+#endif
     class atom_table {
     public:
         //typedef std::basic_string<char, std::char_traits<char>, Alloc> string_t;
@@ -154,7 +163,9 @@ namespace detail {
         }
 
         ~atom_table() {
+#ifndef EIXX_NO_ATOM_TABLE_LOCK
             lock_guard<Mutex> guard(m_lock);
+#endif
             m_atoms.clear();
             m_index.clear();
         }
@@ -187,7 +198,9 @@ namespace detail {
             if (n >= 0)
                 return n;
 
+#ifndef EIXX_NO_ATOM_TABLE_LOCK
             lock_guard<Mutex> guard(m_lock);
+#endif
             n = find_value(bucket, a_atom.c_str());
             if (n >= 0)
                 return n;
@@ -202,7 +215,9 @@ namespace detail {
     private:
         std::vector<string_t>   m_atoms;
         char_int_hash_map       m_index;
+#ifndef EIXX_NO_ATOM_TABLE_LOCK
         Mutex                   m_lock;
+#endif
     };
 } // namespace detail
 

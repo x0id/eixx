@@ -24,8 +24,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _EIXX_HASHTABLE_HPP_
 #define _EIXX_HASHTABLE_HPP_
 
-#include <eixx/util/sync.hpp>
-
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 #include <unordered_map>
 #else
