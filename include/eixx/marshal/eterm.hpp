@@ -157,7 +157,7 @@ class eterm {
         operator const T& () const { return  reinterpret_cast<const T&>(p); }
     } vt;
 
-    void check(eterm_type tp) const { if (unlikely(m_type != tp)) throw err_wrong_type(tp, m_type); }
+    void check(eterm_type tp) const { if (unlikely(m_type != tp)) throw err_wrong_type(m_type, tp); }
 
     /**
      * Decode a term from the Erlang external binary format.
