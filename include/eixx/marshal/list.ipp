@@ -193,7 +193,7 @@ void list<Alloc>::push_back(const eterm<Alloc>& a)
         hd->size = 1;
         hd->alloc_size = 1;
         cons_t* p = hd->tail;
-        p->node.set(a);
+        new (&p->node) eterm<Alloc>(a);
         p->next = NULL;
         return;
     }
